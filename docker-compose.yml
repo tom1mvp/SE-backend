@@ -3,7 +3,6 @@ version: '3.8'
 services:
   backend_service:
     build: .
-    # Name of the container for easier identification
     container_name: backend_api
     env_file:
       - .env
@@ -11,11 +10,12 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    # We define a local network for this project
+      - ./media:/app/media
     networks:
       - app_network
-    # Consistent with the EXPOSE port in your Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
 networks:
   app_network:
