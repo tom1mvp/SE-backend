@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     
     # API apps (system moduls)
     'user',
-    'region'
+    'region',
+    'person'
 ]
 
 MIDDLEWARE = [

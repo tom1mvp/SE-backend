@@ -7,7 +7,12 @@ from region.services.country import CountryServices
 from region.services.province import ProvinceServices
 from region.services.city import CityServices
 
-from region.serializers import CountryListSerializer, ProvinceListSerializer, CityListSerializer
+
+from region.serializers import (
+    CountryListSerializer,
+    ProvinceListSerializer,
+    CityListSerializer
+    )
 
 # View's country
 class ListCountryView(APIView):
