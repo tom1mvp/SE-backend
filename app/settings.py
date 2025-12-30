@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # API apps (system moduls)
-    'user'
+    'user',
+    'region'
 ]
 
 MIDDLEWARE = [

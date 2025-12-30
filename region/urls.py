@@ -1,0 +1,74 @@
+from rest_framework.urls import path
+
+
+from region.views import (
+    ListCountryView,
+    CountryByIdView,
+    CountryByNameView,
+    ListProvinceView,
+    ProvinceByIdView,
+    ProvinceByNameView,
+    ProvinceByCountryView,
+    ListCityView,
+    CityByIdView,
+    CityByNameView,
+    CityByProvinceView
+)
+
+urlpatterns = [
+    path(
+        'country/list/',
+        ListCountryView.as_view(),
+        name='list-country'
+    ),
+    path(
+        'country/id/<int:id>',
+        CountryByIdView.as_view(),
+        name='country-by-id'
+    ),
+    path(
+        'country/name/<str:name>',
+        CountryByNameView.as_view(),
+        name='country-by-name'
+    ),
+    path(
+        'province/list/',
+        ListProvinceView.as_view(),
+        name='province-list'
+    ),
+    path(
+        'province/id/<int:id>',
+        ProvinceByIdView.as_view(),
+        name='province-by-id'
+    ),
+    path(
+        'province/name/<str:name>',
+        ProvinceByNameView.as_view(),
+        name='province-by-name'
+    ),
+    path(
+        'province/country/id/<int:id>',
+        ProvinceByCountryView.as_view(),
+        name='province-by-country'
+    ),
+    path(
+        'city/list/',
+        ListCityView.as_view(),
+        name='list-city'
+    ),
+    path(
+        'city/id/<int:id>',
+        CityByIdView.as_view(),
+        name='city-by-id'
+    ),
+    path(
+        'city/name/<str:name>',
+        CityByNameView.as_view(),
+        name='city-by-name'
+    ),
+    path(
+        'city/province/id/<int:id>',
+        CityByProvinceView.as_view(),
+        name='city-by-province'
+    ),
+]

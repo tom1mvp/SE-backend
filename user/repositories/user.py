@@ -40,7 +40,7 @@ class UserRepository:
     @staticmethod
     def get_user_by_role(role):
         # Filter and return a list of users associated with a specific system role.
-        return User.objects.filter(role__icontains=role).first()
+        return User.objects.filter(role__icontains=role)
     
     @staticmethod
     def create_user(

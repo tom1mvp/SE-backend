@@ -20,19 +20,19 @@ urlpatterns = [
     ),
     
     path(
-        'user/id/<int:id>',
+        'id/<int:id>',
         UserByIdView.as_view(),
         name='user-by-id'
     ),
     
     path(
-        'user/role/<str:role>',
+        'role/<str:role>',
         UserByRoleView.as_view(),
         name='user-by-role'
     ),
     
     path(
-        'user/name/<str:name>',
+        'name/<str:username>',
         UserByUsernameView.as_view(),
         name='user-by-username'
     ),
@@ -50,19 +50,19 @@ urlpatterns = [
     ),
     
     path(
-        'user/update/<int:id>',
+        'update/<int:id>',
         UpdateUserView.as_view(),
         name='update-user'
     ),
     
     path(
-        'user/delete/<int:id>',
+        'delete/<int:id>',
         DeleteUserView.as_view(),
         name='delete-user'
     ),
     
     path(
-        'user/status/<int:id>',
+        'status/<int:id>',
         RecoverUserView.as_view(),
         name='recover-user'
     )

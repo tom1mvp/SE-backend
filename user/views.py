@@ -3,8 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
+
 from user.services.user import UserService
-from .serializers import ListUserSerializer
+
+from user.serializers import ListUserSerializer
 
 """
     User Management API Views

@@ -131,7 +131,7 @@ class UserService:
         return user
     
     @staticmethod
-    def delete_user(data, user_id):
+    def delete_user(user_id):
         # Perform a soft delete by deactivating the user account.
         return UserRepository.delete_user(user_id)
     
