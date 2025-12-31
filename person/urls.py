@@ -10,7 +10,15 @@ from person.views import (
     IdetityDocumentByNameView,
     ListMaritalStatusView,
     MaritalStatusByIdView,
-    MaritalStatusByNameView
+    MaritalStatusByNameView,
+    ListPersonView,
+    PersonByIdView,
+    PersonByNameView,
+    PersonByUserView,
+    CreatePersonView,
+    UpdatePersonView,
+    DeletePersonView,
+    RecoverPersonView
 )
 
 
@@ -59,5 +67,45 @@ urlpatterns = [
         'marital/status/name/<str:name>',
         MaritalStatusByNameView.as_view(),
         name='marital-status-name'
+    ),
+    path(
+        'list/',
+        ListPersonView.as_view(),
+        name='person-list'
+    ),
+    path(
+        'id/<int:id>',
+        PersonByIdView.as_view(),
+        name='person-by-id'
+    ),
+    path(
+        'name/<str:name>',
+        PersonByNameView.as_view(),
+        name='person-by-name'
+    ),
+    path(
+        'user/<int:id>',
+        PersonByUserView.as_view(),
+        name='person-by-user'
+    ),
+    path(
+        'create/',
+        CreatePersonView.as_view(),
+        name='create-person'
+    ),
+    path(
+        'update/<int:id>',
+        UpdatePersonView.as_view(),
+        name='update-person'
+    ),
+    path(
+        'delete/<int:id>',
+        DeletePersonView.as_view(),
+        name='delete-person'
+    ),
+    path(
+        'status/<int:id>',
+        RecoverPersonView.as_view(),
+        name='recover-person'
     ),
 ]
