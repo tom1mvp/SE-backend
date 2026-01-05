@@ -228,6 +228,9 @@ class CreatePersonView(APIView):
         data = request.data
         
         try:
+            if not data or 'city_id' not in data:
+                return Response({"Error": "Sensitive data is missing or the city ID is missing"}, status=status.HTTP_404_NOT_FOUND)
+            
             response = PersonServices.create_person(
                 data,
                 data['user_id'],
@@ -254,6 +257,9 @@ class UpdatePersonView(APIView):
         data = request.data
         
         try:
+            if not data or not person_id or 'city_id' not in data:
+                return Response({"Error": "Sensitive data is missing or the city ID is missing or the person ID is missing"}, status=status.HTTP_404_NOT_FOUND)
+            
             response = PersonServices.update_person(
                 data,
                 person_id,
