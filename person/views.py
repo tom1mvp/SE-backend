@@ -221,7 +221,7 @@ class PersonByUserView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     
 class CreatePersonView(APIView):
-    permission_classes = [IsAdminUser]
+   # permission_classes = [IsAdminUser]
     
     def post(self, request):
         # Handle the creation of a new person record with validated relations.
@@ -249,7 +249,7 @@ class CreatePersonView(APIView):
             return Response({'Error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class UpdatePersonView(APIView):
-    permission_classes = [IsAdminUser]
+   # permission_classes = [IsAdminUser]
     
     def put(self, request, *args, **kwargs):
         # Execute a full update of an existing person's information.

@@ -109,7 +109,7 @@ class UpdateUserView(APIView):
         user_id = int(kwargs.get('id'))
         
         try:
-            response = UserService.update_user(data, data['user_id'])
+            response = UserService.update_user(data, user_id)
             serializer = ListUserSerializer(response)
             return Response({
                 'Message': 'The user has been successfully updated',

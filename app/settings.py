@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'region',
     'person',
     'academic',
-    'establishment'
+    'establishment',
+    'admin_institution'
 ]
 
 MIDDLEWARE = [
