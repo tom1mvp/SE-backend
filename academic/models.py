@@ -16,3 +16,12 @@ class ElectiveCycle(models.Model):
     
     def __str__(self):
         return f'Year: {self.year} || Start date: {self.start_date} || End date: {self.end_date}'
+    
+class Subject(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    section = models.CharField(max_length=10, null=False)
+    time_slot = models.CharField(max_length=20, null=False)
+    institution = models.ForeignKey('establishment.Institution', on_delete=models.PROTECT, related_name='subject', null=False)
+    
+    def __str__(self):
+        return f'Name subject: {self.name} || Section: {self.section} || Time slot: {self.time_slot}'

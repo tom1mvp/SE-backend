@@ -24,7 +24,9 @@ urlpatterns = [
     path('auth/', include('user.urls')),
     path('region/', include('region.urls')),
     path('person/', include('person.urls')),
-    path('institution/', include('establishment.urls'))
+    path('institution/', include('establishment.urls')),
+    path('institution/subject/', include('academic.urls')),
+    path('institution/student/', include('student_institution.urls'))
     
 ]
 

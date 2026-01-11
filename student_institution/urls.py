@@ -1,0 +1,147 @@
+from rest_framework.urls import path
+
+
+from student_institution.views import (
+    ListAllergyView,
+    AllergyByIdView,
+    AllergyByNameView,
+    CreateAllergyView,
+    UpdateAllergyView,
+    ListStudentView,
+    StudentByIdView,
+    StudentByNameView,
+    CreateStudentView,
+    DeleteStudentView,
+    RecoverStudentView,
+    ListStudentFileView,
+    StudentFileByIdView,
+    StudentFileByNumberView,
+    CreateStudentFileView,
+    UpdateStudentFileView,
+    DeleteStudentFileView,
+    ListSubjectErollmentView,
+    SubjectErollmentByIdView,
+    SubjectErollmentByElectiveCycleView,
+    CreateSubjectErollmentView,
+    UpdateSubjectErollmentView
+)
+
+urlpatterns = [
+    # Allergy path
+    path(
+        'allergy/list/',
+        ListAllergyView.as_view(),
+        name='allergy-list'
+    ),
+    path(
+        'allergy/id/<int:id>',
+        AllergyByIdView.as_view(),
+        name='allergy-by-id'
+    ),
+    path(
+        'allergy/name/<str:name>',
+        AllergyByNameView.as_view(),
+        name='allergy-by-name'
+    ),
+    path(
+        'allergy/create/',
+        CreateAllergyView.as_view(),
+        name='alergy-create'
+    ),
+    path(
+        'allergy/update/<int:id>',
+        UpdateAllergyView.as_view(),
+        name='update-allergy'
+    ),
+    
+    # Student path
+    path(
+        'list/',
+        ListStudentView.as_view(),
+        name='list-student'
+    ),
+    path(
+        'id/<int:id>',
+        StudentByIdView.as_view(),
+        name='student-by-id'
+    ),
+    path(
+        'name/<str:name>',
+        StudentByNameView.as_view(),
+        name='student-by-name'
+    ),
+    path(
+        'create/',
+        CreateStudentView.as_view(),
+        name='create-student'
+    ),
+    path(
+        'delete/<int:id>',
+        DeleteStudentView.as_view(),
+        name='delete-student'
+    ),
+    path(
+        'status/<int:id>',
+        RecoverStudentView.as_view(),
+        name='recover-student'
+    ),
+    
+    # Student file path
+    path(
+        'file/list/',
+        ListStudentFileView.as_view(),
+        name='list-student-file'
+    ),
+    path(
+        'file/id/<int:id>',
+        StudentFileByIdView.as_view(),
+        name='student-file-by-id'
+    ),
+    path(
+        'file/number/<str:number>',
+        StudentFileByNumberView.as_view(),
+        name='student-file-by-number'
+    ),
+    path(
+        'file/create/',
+        CreateStudentFileView.as_view(),
+        name='create-student-file'
+    ),
+    path(
+        'file/update/<int:id>',
+        UpdateStudentFileView.as_view(),
+        name='update-student-file'
+    ),
+    path(
+        'file/delete/<int:id>',
+        DeleteStudentFileView.as_view(),
+        name='delete-student-file'
+    ),
+    
+    # Subject enrollment
+    path(
+        'subject/enrollment/list/',
+        ListSubjectErollmentView.as_view(),
+        name='list-subject-enrollment'
+    ),
+    path(
+        'subject/enrollment/id/<int:id>',
+        SubjectErollmentByIdView.as_view(),
+        name='subjet-enrollment-by-id'
+    ),
+    path(
+        'subject/enrollment/elective/cycle/year/<int:year>',
+        SubjectErollmentByElectiveCycleView.as_view(),
+        name='elective-cycle-by-year'
+    ),
+    path(
+      'subject/enrollment/create/',
+      CreateSubjectErollmentView.as_view(),
+      name='create-subject-enrollment'
+    ),
+    path(
+        'subject/enrollment/update/<int:id>',
+        UpdateSubjectErollmentView.as_view(),
+        name='update-subject-enrollment'
+    ),
+]
