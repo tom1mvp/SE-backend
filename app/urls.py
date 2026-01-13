@@ -26,8 +26,8 @@ urlpatterns = [
     path('person/', include('person.urls')),
     path('institution/', include('establishment.urls')),
     path('institution/subject/', include('academic.urls')),
-    path('institution/student/', include('student_institution.urls'))
-    
+    path('institution/student/', include('student_institution.urls')),
+    path('institution/tutor/', include('tutor_institution.urls'))
 ]
 
 if settings.DEBUG:
