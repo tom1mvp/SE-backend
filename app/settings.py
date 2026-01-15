@@ -54,7 +54,9 @@ INSTALLED_APPS = [
     'establishment',
     'admin_institution',
     'student_institution',
-    'tutor_institution'
+    'tutor_institution',
+    'teacher_institution',
+    'finance'
 ]
 
 MIDDLEWARE = [

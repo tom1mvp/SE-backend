@@ -13,7 +13,7 @@ class ListTutorView(APIView):
     This endpoint calls the service layer to fetch all records and returns them 
     serialized in a list format.
     """
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
    
     def get(self, request):
         # Fetching all tutor instances through the Service layer
@@ -34,7 +34,7 @@ class TutorByIdView(APIView):
     API View to retrieve a single tutor's information based on their unique ID.
     The ID is extracted from the URL parameters and validated before processing.
     """
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def get(self, request, *args, **kwargs):
         # Extracting the ID from the URL keyword arguments
@@ -61,7 +61,7 @@ class TutorByNameView(APIView):
     API View that allows searching for tutors by the first name of the associated person.
     This enables dynamic searches for specific staff or family members in the database.
     """
-    # permission_classes = [IsAdminUser, IsAuthenticated]
+    permission_classes = [IsAdminUser, IsAuthenticated]
     
     def get(self, request, *args, **kwargs):
         # Extracting the name string from the URL
@@ -85,7 +85,7 @@ class TutorByRelationship(APIView):
     API View to filter tutors by their declared relationship with students.
     Useful for generating reports of parents, guardians, or other family types.
     """
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def get(self, request, *args, **kwargs):
         relationship = str(kwargs.get('relationship'))
