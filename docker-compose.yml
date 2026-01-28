@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend_service:
     build: .
@@ -11,6 +9,9 @@ services:
     volumes:
       - .:/app
       - ./media:/app/media
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     networks:
       - app_network
     command: >
