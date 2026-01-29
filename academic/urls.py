@@ -3,10 +3,12 @@ from rest_framework.urls import path
 
 from academic.views import (
     ListSubjectView,
-    SubjectByIdView,
+    SubjectByCourseView,
     SubjectByNameView,
     CreateSubjectView,
     UpdateSubjectView,
+    DeleteSubjectView,
+    RecoverSubjectView,
     CreateModalityAssistanceView,
     ListAssistanceView,
     AssistanceByStudentView,
@@ -17,7 +19,12 @@ from academic.views import (
     DisciplinaryActionByStudentView,
     DisciplinaryActionByDateView,
     CreateDisciplinaryActionView,
-    UpdateDisciplinaryActionView
+    UpdateDisciplinaryActionView,
+    ListCourseView,
+    CourseByNameView,
+    CourseByInstitutionView,
+    CreateCourseView,
+    UpdateCourseView
 )
 
 urlpatterns = [
@@ -28,14 +35,14 @@ urlpatterns = [
         name='list-subject'
     ),
     path(
-        'subject/id/<int:id>',
-        SubjectByIdView.as_view(),
-        name='subject-by-id'
-    ),
-    path(
         'subject/name/<str:name>',
         SubjectByNameView.as_view(),
         name='subject-by-name'
+    ),
+    path(
+        'subject/course/<str:name>',
+        SubjectByCourseView.as_view(),
+        name='subject-by-course-name'
     ),
     path(
         'subject/create/',
@@ -46,6 +53,16 @@ urlpatterns = [
         'subject/update/<int:id>',
         UpdateSubjectView.as_view(),
         name='update-subject'
+    ),
+    path(
+        'subject/delete/<int:id>',
+        DeleteSubjectView.as_view(),
+        name='delete-subject'
+    ),
+    path(
+        'subject/status/<int:id>',
+        RecoverSubjectView.as_view(),
+        name='recover-subject'
     ),
     
     # Modality assistance urls
@@ -107,5 +124,32 @@ urlpatterns = [
         'disciplinary/action/update/<int:id>',
         UpdateDisciplinaryActionView.as_view(),
         name='update-disciplinary-action'
+    ),
+    
+    # Course urls
+    path(
+        'course/list/',
+        ListCourseView.as_view(),
+        name='list-course'
+    ),
+    path(
+        'course/name/<str:name>',
+        CourseByNameView.as_view(),
+        name='course-by-name'
+    ),
+    path(
+        'course/institution/name/<str:name>',
+        CourseByInstitutionView.as_view(),
+        name='course-by-institution'
+    ),
+    path(
+        'course/create/',
+        CreateCourseView.as_view(),
+        name='create-course'
+    ),
+    path(
+        'course/update/<int:id>',
+        UpdateCourseView.as_view(),
+        name='update-course'
     ),
 ]

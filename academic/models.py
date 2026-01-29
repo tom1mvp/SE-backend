@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 
 
+from teacher_institution.models import Teacher
+
 class ElectiveCycle(models.Model):
     year = models.PositiveIntegerField(
         unique=True,
@@ -18,14 +20,31 @@ class ElectiveCycle(models.Model):
     def __str__(self):
         return f'Year: {self.year} || Start date: {self.start_date} || End date: {self.end_date}'
     
-class Subject(models.Model):
-    name = models.CharField(max_length=50, null=False)
-    section = models.CharField(max_length=10, null=False)
-    time_slot = models.CharField(max_length=20, null=False)
-    institution = models.ForeignKey('establishment.Institution', on_delete=models.PROTECT, related_name='subject', null=False)
+class Course(models.Model):
+    TIME_SLOT_CHOICES = [
+        ('manana', 'Manana'),
+        ('tarde', 'Tarde'),
+        ('virtual', 'Virtual'),
+    ]
+    
+    name = models.CharField(max_length=20, null=False)
+    section = models.CharField(max_length=20, null=False)
+    time_slot = models.CharField(max_length=20, choices=TIME_SLOT_CHOICES ,null=False)
+    institution = models.ForeignKey('establishment.Institution', on_delete=models.PROTECT, related_name='course', null=False)
     
     def __str__(self):
-        return f'Name subject: {self.name} || Section: {self.section} || Time slot: {self.time_slot}'
+        return f'Course name: {self.name} || Section: {self.section} || Time slot: {self.time_slot} || Institution: {self.institution.name}'
+    
+class Subject(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    start_time = models.TimeField(null=False, default="08:00", verbose_name="Hora de inicio")
+    end_time = models.TimeField(null=False, default="12:00", verbose_name='Hora de finalización')
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='subject', null=False)
+    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, related_name='subject', null=False)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f'Name subject: {self.name} || Teacher name: {self.teacher.person.first_name}'
     
 class ModalityAssistance(models.Model):
     MODALITY_CHOICES = [

@@ -20,17 +20,19 @@ from academic.serializers import ListSubjectSerializer
 from academic.services.modality_assistance import ModalityAssistanceServices
 from academic.services.assistance import AssistanceServices
 from academic.services.disciplinary_action import DisciplinaryActionServices
+from academic.services.course import CourseServices
 
 from academic.serializers import (
     ListModalityAssistanceSerializer,
     ListAssistanceSerializer,
-    ListDisciplinaryActionSerializer
+    ListDisciplinaryActionSerializer,
+    ListCourseSerializer
 )
 
 # subject views
 
 class ListSubjectView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
    
     def get(self, request):
         subject = SubjectServices.get_all_subject()
@@ -41,43 +43,44 @@ class ListSubjectView(APIView):
         serializer = ListSubjectSerializer(subject, many=True)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
-class SubjectByIdView(APIView):
-    permission_classes = [IsAdminUser]
+class SubjectByNameView(APIView):
+   # permission_classes = [IsAdminUser, IsAuthenticated]
    
     def get(self, request, *args, **kwargs):
-        subject_id = int(kwargs.get('id'))
-       
-        if not subject_id:
-            return Response({'error': 'Subject not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-        response = SubjectServices.get_subject_by_id(subject_id)
-        serializer = ListSubjectSerializer(response)
-        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-        
-class SubjectByNameView(APIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request, *args, **kwargs):
         subject_name = str(kwargs.get('name'))
-        
+       
         if not subject_name:
             return Response({'error': 'Subject name not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        response = SubjectServices.get_subject_name(subject_name)
+        response = SubjectServices.get_subject_by_name(subject_name)
         serializer = ListSubjectSerializer(response)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+class SubjectByCourseView(APIView):
+    # permission_classes = [IsAdminUser, IsAuthenticated]
+    
+    def get(self, request, *args, **kwargs):
+        course_name = str(kwargs.get('name'))
+        
+        if not course_name:
+            return Response({'error': 'Course name not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        response = SubjectServices.get_subject_by_course(course_name)
+        serializer = ListSubjectSerializer(response, many=True)
+        
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class CreateSubjectView(APIView):
-    permission_classes = [IsAdminUser]
+   # permission_classes = [IsAdminUser]
     
     def post(self, request):
         data = request.data
         
-        if not data or not 'institution_id' in data:
-            return Response({'error': 'No data avaible or institution ID not found'}, status=status.HTTP_404_NOT_FOUND)
+        if not data or not 'course_id' in data or not 'teacher_id' in data:
+            return Response({'error': 'No data avaible or course ID not found or teacher ID not found'}, status=status.HTTP_404_NOT_FOUND)
         
         try:
-            response = SubjectServices.create_subject(data, data['institution_id'])
+            response = SubjectServices.create_subject(data, data['course_id'], data['teacher_id'])
             serializer = ListSubjectSerializer(response)
             
             return Response({
@@ -88,17 +91,17 @@ class CreateSubjectView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class UpdateSubjectView(APIView):
-    permission_classes = [IsAdminUser]
+   # permission_classes = [IsAdminUser]
     
     def put(self, request, *args, **kwargs):
         data = request.data
         subject_id = int(kwargs.get('id'))
         
-        if not data or not 'institution_id' in data or not subject_id:
-            return Response({'error': 'No data avaible or institution ID not found or subject ID not found'}, status=status.HTTP_404_NOT_FOUND)
+        if not data or not 'course_id' in data or not 'teacher_id' in data or not subject_id:
+            return Response({'error': 'No data avaible or course ID not found or teacher ID not found or subject ID not found'}, status=status.HTTP_404_NOT_FOUND)
             
         try:
-            response = SubjectServices.update_subject(data, subject_id, data['institution_id'])
+            response = SubjectServices.update_subject(data, subject_id, data['course_id'], data['teacher_id'])
             serializer = ListSubjectSerializer(response)
             
             return Response({
@@ -107,7 +110,37 @@ class UpdateSubjectView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+class DeleteSubjectView(APIView):
+    # permission_classes = [IsAdminUser]
+    
+    def patch(self, reques, *args, **kwargs):
+        subject_id = int(kwargs.get('id'))
+        
+        if not subject_id:
+            return Response({'error': 'subject ID not found'}, status=status.HTTP_404_NOT_FOUND)
 
+        try:
+            SubjectServices.delete_subject(subject_id)
+            return Response({'message': 'The subject was successfully deactivated.'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class RecoverSubjectView(APIView):
+    # permission_classes = [IsAdminUser]
+    
+    def patch(self, reques, *args, **kwargs):
+        subject_id = int(kwargs.get('id'))
+        
+        if not subject_id:
+            return Response({'error': 'subject ID not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            SubjectServices.recover_subject(subject_id)
+            return Response({'message': 'The subject was successfully recovered.'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'Error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 # modality assistance views
 class ListModalityAssistanceView(APIView):
     permission_classes = [IsAuthenticated]
@@ -288,3 +321,103 @@ class UpdateDisciplinaryActionView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+# course views
+
+class ListCourseView(APIView):
+   # permission_classes = [IsAdminUser, IsAuthenticated]
+   
+   def get(self, request):
+       course = CourseServices.get_all_course()
+       
+       if not course:
+           return Response({
+               'error': 'List course not found'
+           }, status=status.HTTP_404_NOT_FOUND)
+           
+       serializer = ListCourseSerializer(course, many=True)
+       
+       return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+   
+class CourseByNameView(APIView):
+    # permission_classes = [IsAdminUser, IsAuthenticated]
+    
+    def get(self, request, *args, **kwargs):
+        name = str(kwargs.get('name'))
+        
+        if not name:
+            return Response({
+                'error': 'Course name not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+            
+        response = CourseServices.get_course_by_name(name)
+        
+        serializer = ListCourseSerializer(response, many=True)
+       
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+class CourseByInstitutionView(APIView):
+    # permission_classes = [IsAdminUser]
+    
+    def get(self, request, *args, **kwargs):
+        name = str(kwargs.get('name'))
+        
+        if not name:
+            return Response({
+                'error': 'Institution name not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+            
+        response = CourseServices.get_course_by_institution(name)
+        
+        serializer = ListCourseSerializer(response, many=True)
+       
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+class CreateCourseView(APIView):
+    # permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        data = request.data
+        
+        if not data or 'institution_id' not in data:
+            return Response({
+                'error': 'No data avaible or institution ID not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            response = CourseServices.create_course(data, data['institution_id'])
+            
+            serializer = ListCourseSerializer(response)
+            
+            return Response({
+                'message': 'The course has been created successfully.',
+                'data': serializer.data
+            }, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateCourseView(APIView):
+    # permission_classes = [IsAdminUser]
+    
+    def put(self, request, *args, **kwargs):
+        data = request.data
+        
+        course_id = int(kwargs.get('id'))
+        
+        if not data or 'institution_id' not in data or not course_id:
+            return Response({
+                'error': 'No data avaible or institution ID not found or course ID not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+            
+        try:
+            response = CourseServices.update_course(data, course_id, data['institution_id'])
+            
+            serializer = ListCourseSerializer(response)
+            
+            return Response({
+                'message': 'The course has been updated successfully.',
+                'data': serializer.data
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            
