@@ -29,15 +29,6 @@ class TutorRepository:
         return Tutor.objects.filter(id=tutor_id).first()
     
     @staticmethod
-    def get_tutor_by_relationship(relationship):
-        """
-        Filters the tutor database based on the specific legal or personal 
-        relationship with the student (e.g., 'Mother', 'Legal Guardian').
-        This is useful for categorization and emergency contact sorting.
-        """
-        return Tutor.objects.filter(relationship__icontains=relationship)
-    
-    @staticmethod
     def get_tutor_by_name(name):
         """
         Searches for tutors by performing a join-like operation with the Person model.
@@ -48,8 +39,7 @@ class TutorRepository:
     
     @staticmethod
     def create_tutor(
-        person_id,
-        relationship
+        person_id
     ):
         """
         Executes the creation of a new Tutor record after validating dependencies.
@@ -66,7 +56,6 @@ class TutorRepository:
         
         # Persistence of the new tutor record
         new_tutor = Tutor.objects.create(
-            relationship=relationship,
             person=person
         )
         

@@ -5,7 +5,6 @@ from tutor_institution.views import (
     ListTutorView,
     TutorByIdView,
     TutorByNameView,
-    TutorByRelationship,
     CreateTutorView
 )
 
@@ -24,11 +23,6 @@ urlpatterns = [
         'name/<str:name>',
         TutorByNameView.as_view(),
         name='tutor-by-name'
-    ),
-    path(
-        'relationship/<str:relationship>',
-        TutorByRelationship.as_view(),
-        name='tutor-by-relationship'
     ),
     path(
         'create/',

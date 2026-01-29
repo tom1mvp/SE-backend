@@ -8,6 +8,7 @@ from tutor_institution.serializers import ListTutorSerializer
 
 
 class ListTutorView(APIView):
+    
     """
     API View to retrieve a complete list of all tutors registered in the system.
     This endpoint calls the service layer to fetch all records and returns them 
@@ -78,30 +79,6 @@ class TutorByNameView(APIView):
         serializer = ListTutorSerializer(response, many=True)
         
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-    
-
-class TutorByRelationship(APIView):
-    """
-    API View to filter tutors by their declared relationship with students.
-    Useful for generating reports of parents, guardians, or other family types.
-    """
-    permission_classes = [IsAdminUser]
-    
-    def get(self, request, *args, **kwargs):
-        relationship = str(kwargs.get('relationship'))
-        
-        if not relationship:
-            return Response({
-                'error': 'Relationship parameter is missing'
-            }, status=status.HTTP_400_BAD_REQUEST)
-            
-        # Fetching filtered results from the Service layer
-        response = TutorServices.get_tutor_by_relationship(relationship)
-        
-        serializer = ListTutorSerializer(response, many=True)
-        
-        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-    
 
 class CreateTutorView(APIView):
     """

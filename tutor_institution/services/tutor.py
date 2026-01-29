@@ -35,14 +35,6 @@ class TutorServices:
         return TutorRepository.get_tutor_by_name(name)
     
     @staticmethod
-    def get_tutor_by_relationship(relationship):
-        """
-        Handles the request to filter tutors by their family or legal link to a student.
-        Useful for organizational reporting or emergency contact management.
-        """
-        return TutorRepository.get_tutor_by_relationship(relationship)
-    
-    @staticmethod
     def create_tutor(
         data,
         person_id
@@ -52,20 +44,10 @@ class TutorServices:
         This method ensures that all business requirements (like mandatory fields) 
         are met before requesting the repository to persist the data.
         """
-        # Define the list of attributes that must be present in the request
-        required_fields = ['relationship']
-        
-        # Verify that all required fields in the form have been filled in.
-        # This loop acts as a primary guard against incomplete data submissions.
-        for field in required_fields:
-            if field not in data:
-                # Raising a DRF ValidationError ensures the API returns a 400 Bad Request
-                raise ValidationError({field: f'El campo {field} es obligatorio'})
             
         # Once validated, the data is passed to the repository for database insertion
         new_tutor = TutorRepository.create_tutor(
-            person_id=person_id,
-            relationship=data['relationship']
+            person_id=person_id
         )
         
         return new_tutor

@@ -30,7 +30,8 @@ urlpatterns = [
     path('institution/tutor/', include('tutor_institution.urls')),
     path('institution/teacher/', include('teacher_institution.urls')),
     path('institution/teacher/salary/', include('finance.urls')),
-    path('grades/', include('grades.urls'))
+    path('grades/', include('grades.urls')),
+    path('relationship/', include('relationship.urls'))
 ]
 
 if settings.DEBUG:

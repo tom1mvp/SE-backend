@@ -20,8 +20,7 @@ class ListTutorSerializer(serializers.ModelSerializer):
             'person_first_name',
             'person_last_name',
             'person_mail',
-            'person_dni',
-            'relationship'
+            'person_dni'
         ]
     
     def get_person_id(self, obj):

@@ -32,7 +32,7 @@ from academic.serializers import (
 # subject views
 
 class ListSubjectView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
    
     def get(self, request):
         subject = SubjectServices.get_all_subject()
@@ -44,7 +44,7 @@ class ListSubjectView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class SubjectByNameView(APIView):
-   # permission_classes = [IsAdminUser, IsAuthenticated]
+    permission_classes = [IsAdminUser, IsAuthenticated]
    
     def get(self, request, *args, **kwargs):
         subject_name = str(kwargs.get('name'))
@@ -57,7 +57,7 @@ class SubjectByNameView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     
 class SubjectByCourseView(APIView):
-    # permission_classes = [IsAdminUser, IsAuthenticated]
+    permission_classes = [IsAdminUser, IsAuthenticated]
     
     def get(self, request, *args, **kwargs):
         course_name = str(kwargs.get('name'))
@@ -71,7 +71,7 @@ class SubjectByCourseView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class CreateSubjectView(APIView):
-   # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def post(self, request):
         data = request.data
@@ -91,7 +91,7 @@ class CreateSubjectView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class UpdateSubjectView(APIView):
-   # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def put(self, request, *args, **kwargs):
         data = request.data
@@ -112,7 +112,7 @@ class UpdateSubjectView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class DeleteSubjectView(APIView):
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def patch(self, reques, *args, **kwargs):
         subject_id = int(kwargs.get('id'))
@@ -127,7 +127,7 @@ class DeleteSubjectView(APIView):
             return Response({'Error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class RecoverSubjectView(APIView):
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def patch(self, reques, *args, **kwargs):
         subject_id = int(kwargs.get('id'))
