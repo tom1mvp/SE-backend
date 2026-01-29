@@ -13,6 +13,9 @@ from academic.repositories.modality_assistance import ModalityAssistanceReposito
 """
 
 class ModalityAssistanceServices:
+    @staticmethod
+    def get_all_modality_assitance():
+        return ModalityAssistanceRepository.get_all_modality_assistance()
     
     # Coordinates the creation of a new attendance modality after data validation.
     @staticmethod

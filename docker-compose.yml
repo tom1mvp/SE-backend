@@ -5,19 +5,9 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - .:/app
-      - ./media:/app/media
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    networks:
-      - app_network
     command: >
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
-
-networks:
-  app_network:
-    driver: bridge

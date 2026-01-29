@@ -109,8 +109,21 @@ class UpdateSubjectView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 # modality assistance views
-
+class ListModalityAssistanceView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        modality_assistance = ModalityAssistanceServices.get_all_modality_assitance()
+        
+        if not modality_assistance:
+            return Response({'error': 'List modality assistance not found'})
+        
+        serializer = ListModalityAssistanceSerializer(modality_assistance, many=True)
+        
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+    
 class CreateModalityAssistanceView(APIView):
+    permission_classes = [IsAdminUser]
     def post(self, request):
         data = request.data
         if not data:
@@ -139,6 +152,7 @@ class ListAssistanceView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
 class AssistanceByStudentView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         student = int(kwargs.get('id'))
         
@@ -150,6 +164,7 @@ class AssistanceByStudentView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class AssistanceByDateView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         date = kwargs.get('date')
         
@@ -161,6 +176,7 @@ class AssistanceByDateView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class CreateAssistanceView(APIView):
+    permission_classes = [IsAdminUser]
     def post(self, request):
         data = request.data
         
@@ -179,6 +195,7 @@ class CreateAssistanceView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateAssistanceView(APIView):
+    permission_classes = [IsAdminUser]
     def put(self, request, *args, **kwargs):
         data = request.data
         assistance = int(kwargs.get('id'))
@@ -210,6 +227,7 @@ class ListDisciplinaryActionView(APIView):
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         
 class DisciplinaryActionByDateView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         date = kwargs.get('date')
         
@@ -221,6 +239,7 @@ class DisciplinaryActionByDateView(APIView):
         return Response({'date': serializer.data}, status=status.HTTP_200_OK)
 
 class DisciplinaryActionByStudentView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
     def get(self, request, *args, **kwargs):
         student = str(kwargs.get('name'))
         
@@ -232,6 +251,7 @@ class DisciplinaryActionByStudentView(APIView):
         return Response({'date': serializer.data}, status=status.HTTP_200_OK)
 
 class CreateDisciplinaryActionView(APIView):
+    permission_classes = [IsAdminUser]
     def post(self, request):
         data = request.data
         
@@ -250,6 +270,7 @@ class CreateDisciplinaryActionView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class UpdateDisciplinaryActionView(APIView):
+    permission_classes = [IsAdminUser]
     def put(self, request, *args, **kwargs):
         data = request.data
         disciplinaty_action = int(kwargs.get('id'))

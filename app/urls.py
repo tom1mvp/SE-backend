@@ -29,7 +29,8 @@ urlpatterns = [
     path('institution/student/', include('student_institution.urls')),
     path('institution/tutor/', include('tutor_institution.urls')),
     path('institution/teacher/', include('teacher_institution.urls')),
-    path('institution/teacher/salary/', include('finance.urls'))
+    path('institution/teacher/salary/', include('finance.urls')),
+    path('grades/', include('grades.urls'))
 ]
 
 if settings.DEBUG:
